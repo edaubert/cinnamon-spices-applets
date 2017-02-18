@@ -1,0 +1,6 @@
+{
+    "dangerous": false,
+    "description": "Shows a list of services and allows to start/stop them.",
+    "name": "Services with settings",
+    "uuid": "serviceswithsettings@edaubert"
+}

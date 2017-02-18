@@ -1,0 +1,26 @@
+{
+    "refreshInterval":  {
+        "type": "spinbutton",
+        "default": 60,
+        "min": 30,
+        "max": 3600,
+        "units": "seconds",
+        "step": 5,
+        "description": "Update interval"
+    },
+    "blacklist": {
+        "type": "entry",
+        "default": "",
+        "description": "List all services we don't want to manipulate.\nSeparated by comma. (Regex accepted)"
+    },
+    "whitelist": {
+        "type": "entry",
+        "default": "",
+        "description": "List all services we want to manipulate.\nSeparated by comma. (Regex accepted)"
+    },
+    "switchAll": {
+        "type": "checkbox",
+        "default":false,
+        "description": "Allow to add a button on the menu to switch all the services together"
+    }
+}
