@@ -1,0 +1,10 @@
+{
+    "description": "Save the position of windows to restore it after unplug/plug of monitor.\nRequires wmctrl, xwininfo and xrandr (should be already installed on your Cinnamon installation)",
+    "cinnamon-version": [
+        "3.2"
+    ],
+    "url": "",
+    "dangerous": false,
+    "name": "MultiMonitorWindowPositionHandling",
+    "uuid": "MultiMonitorWindowPositionHandling@edaubert"
+}
