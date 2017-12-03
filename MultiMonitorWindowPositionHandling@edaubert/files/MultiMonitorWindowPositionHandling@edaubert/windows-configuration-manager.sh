@@ -29,38 +29,43 @@ function saveConfiguration () {
 		test -z "$maximizedVertically"
 		maximizedVertically=`echo $?`
 		
-		echo "-r -i $mywinid -e 0,${x},${y},${width},${height}"
-		echo "-i -r $mywinid -e 0,${x},${y},${width},${height}" >> $1
+		echo `echo $info | grep "Window id:" | cut -d'"' -f2`
+		# order of the following lines is important
+		
+		#echo "-i -r ${mywinid} -b remove,maximized_vert,maximized_horz"
+		echo "-i -r ${mywinid} -b remove,maximized_vert,maximized_horz" >> $1
 		
 		if [[ "$maximizedHorizontally" = "1" && "$maximizedVertically" = "1" ]] ; then
-			echo "-i -r ${mywinid} -b add,maximized_horz,maximized_vert"
+			# echo "-i -r ${mywinid} -b add,maximized_horz,maximized_vert"
 			echo "-i -r ${mywinid} -b add,maximized_horz,maximized_vert" >> $1
 		else
 			if [ "$maximizedHorizontally" = "1" ]; then
-						echo "-i -r ${mywinid} -b add,maximized_horz"
+						# echo "-i -r ${mywinid} -b add,maximized_horz"
 						echo "-i -r ${mywinid} -b add,maximized_horz" >> $1
 					else
-						echo "-i -r ${mywinid} -b remove,maximized_horz"
+						# echo "-i -r ${mywinid} -b remove,maximized_horz"
 						echo "-i -r ${mywinid} -b remove,maximized_horz" >> $1
 					fi
 					if [ "$maximizedVertically" = "1" ]; then
-						echo "-i -r ${mywinid} -b add,maximized_vert"
+						# echo "-i -r ${mywinid} -b add,maximized_vert"
 						echo "-i -r ${mywinid} -b add,maximized_vert" >> $1
 					else
-						echo "-i -r ${mywinid} -b remove,maximized_vert"
+						# echo "-i -r ${mywinid} -b remove,maximized_vert"
 						echo "-i -r ${mywinid} -b remove,maximized_vert" >> $1
 					fi
 		fi
+		# echo "-r -i $mywinid -e 0,${x},${y},${width},${height}"
+		echo "-i -r $mywinid -e 0,${x},${y},${width},${height}" >> $1
 	done
 }
 
 function restoreConfiguration () {
 	file=$1
-	echo $1
+	# echo $1
 
 	cat "$file" | while read -r line;
 	do
-		echo "wmctrl $line"
+		# echo "wmctrl $line"
 		wmctrl $line
 	done
 }
