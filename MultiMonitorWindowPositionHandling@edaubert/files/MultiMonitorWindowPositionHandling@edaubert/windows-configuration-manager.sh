@@ -16,25 +16,34 @@ function saveConfiguration () {
 	rm -rf $1
 	wmctrl -p -G -l | awk '($2 != -1)&&($3 != 0)&&($NF != "Desktop")' | awk '{print $1}' | while read mywinid
 	do
-		local info=`xwininfo -stats -wm -id "$mywinid"`
-		local x=$(echo -e "$info" | grep "Absolute upper-left X" | awk '{print $NF}')
-		local y=$(echo -e "$info" | grep "Absolute upper-left Y" | awk '{print $NF}')
-		local width=$(echo -e "$info" | grep "Width" | awk '{print $NF}')
-		local height=$(echo -e "$info" | grep "Height" | awk '{print $NF}')
-		local maximizedHorizontally=$(echo -e "$info" | grep "Maximized Horz")
-		local maximizedVertically=$(echo -e "$info" | grep "Maximized Vert")
-		
+		local info
+		local x
+		local y
+		local width
+		local height
+		local maximizedHorizontally
+		local maximizedVertically
+
+		info=`xwininfo -stats -wm -id "$mywinid"`
+		x=$(echo -e "$info" | grep "Absolute upper-left X" | awk '{print $NF}')
+		y=$(echo -e "$info" | grep "Absolute upper-left Y" | awk '{print $NF}')
+		width=$(echo -e "$info" | grep "Width" | awk '{print $NF}')
+		height=$(echo -e "$info" | grep "Height" | awk '{print $NF}')
+		maximizedHorizontally=$(echo -e "$info" | grep "Maximized Horz")
+		maximizedVertically=$(echo -e "$info" | grep "Maximized Vert")
+
 		test -z "$maximizedHorizontally"
 		maximizedHorizontally=`echo $?`
 		test -z "$maximizedVertically"
 		maximizedVertically=`echo $?`
-		
-		echo `echo $info | grep "Window id:" | cut -d'"' -f2`
-		# order of the following lines is important
-		
+
+		echo "`echo $info | grep "Window id:" | cut -d'"' -f2`"
+
+		# INFO order of the following lines is important
+
 		#echo "-i -r ${mywinid} -b remove,maximized_vert,maximized_horz"
 		echo "-i -r ${mywinid} -b remove,maximized_vert,maximized_horz" >> $1
-		
+
 		if [[ "$maximizedHorizontally" = "1" && "$maximizedVertically" = "1" ]] ; then
 			# echo "-i -r ${mywinid} -b add,maximized_horz,maximized_vert"
 			echo "-i -r ${mywinid} -b add,maximized_horz,maximized_vert" >> $1
